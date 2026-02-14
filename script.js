@@ -62,6 +62,10 @@ function changeQty(i, val) {
 }
 
 function showQR() {
+  if (!cart || cart.length === 0) {
+    alert("Cart is empty!");
+    return;
+  }
   const qr = localStorage.getItem("qr");
   if (!qr) {
     alert("Upload QR in management");
@@ -72,48 +76,6 @@ function showQR() {
 }
 
 function completeOrder() {
-  if (!cart || cart.length === 0) {
-    alert("Cart is empty!");
-    return;
-  }
-
-  // Save order to reports
-  let reports = JSON.parse(localStorage.getItem("reports")) || [];
-
-  reports.push({
-    date: new Date().toISOString(),
-    items: cart,
-    total: cart.reduce((sum, item) => sum + item.price * item.qty, 0),
-  });
-
-  localStorage.setItem("reports", JSON.stringify(reports));
-
-  // ✅ CLEAR CART MEMORY
-  cart = [];
-
-  // ✅ CLEAR UI TABLE
-  document.getElementById("cartItems").innerHTML = "";
-
-  // ✅ RESET TOTALS
-  document.getElementById("totalItems").innerText = "0";
-  document.getElementById("totalAmount").innerText = "0";
-
-  // ✅ CLOSE MODAL
-  document.getElementById("qrModal").style.display = "none";
-
-  // ✅ FORCE CLEAN PAGE RELOAD
-  window.location.replace("index.html");
-}
-
-function openLogin() {
-  document.getElementById("loginModal").style.display = "flex";
-}
-
-// function closeQR() {
-//   document.getElementById("qrModal").style.display = "none";
-// }
-
-function closeQR() {
   // Clear cart array
   cart = [];
 
@@ -129,6 +91,33 @@ function closeQR() {
 
   // Navigate to fresh index page
   window.location.replace("index.html");
+}
+
+function openLogin() {
+  document.getElementById("loginModal").style.display = "flex";
+}
+
+// function closeQR() {
+//   document.getElementById("qrModal").style.display = "none";
+// }
+
+function closeQR() {
+  document.getElementById("qrModal").style.display = "none";
+}
+
+function completePayment() {
+  orders.push({
+    date: new Date().toISOString(),
+    items: cart,
+  });
+
+  localStorage.setItem("orders", JSON.stringify(orders));
+
+  cart = [];
+  updateCart();
+  closeQR();
+
+  setTimeout(() => location.reload(), 1000);
 }
 
 function checkLogin() {
