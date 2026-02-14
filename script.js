@@ -109,8 +109,26 @@ function openLogin() {
   document.getElementById("loginModal").style.display = "flex";
 }
 
+// function closeQR() {
+//   document.getElementById("qrModal").style.display = "none";
+// }
+
 function closeQR() {
+  // Clear cart array
+  cart = [];
+
+  // Clear cart table UI
+  document.getElementById("cartItems").innerHTML = "";
+
+  // Reset totals
+  document.getElementById("totalItems").innerText = "0";
+  document.getElementById("totalAmount").innerText = "0";
+
+  // Close modal
   document.getElementById("qrModal").style.display = "none";
+
+  // Navigate to fresh index page
+  window.location.replace("index.html");
 }
 
 function checkLogin() {
