@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Restaurant POS</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h2>🥣🔥செல்வம் இட்லி கடை😋✨</h2>
+      <div class="header-right">
+        <button class="manage-icon" onclick="openLogin()">⚙️</button>
+      </div>
+    </header>
+
+    <div class="container">
+      <div class="items" id="itemList"></div>
+
+      <div class="cart-section">
+        <h3 style="padding: 10px">Cart</h3>
+
+        <div class="cart-table-wrapper">
+          <table class="cart-table">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Qty</th>
+                <th>Price</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody id="cartItems"></tbody>
+          </table>
+        </div>
+
+        <div class="cart-bottom">
+          <p>Total Items: <span id="totalItems">0</span></p>
+          <p>Total Amount: ₹<span id="totalAmount">0</span></p>
+          <button class="pay-btn" onclick="showQR()">Payment</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- QR PAYMENT MODAL -->
+    <div id="qrModal" class="modal">
+      <div class="payment-card">
+        <h3>Scan & Pay</h3>
+
+        <div class="qr-wrapper">
+          <img id="qrImage" />
+        </div>
+
+        <div class="payment-actions">
+          <button class="success-btn" onclick="completeOrder()">
+            Complete Order
+          </button>
+          <button class="cancel-btn" onclick="closeQR()">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="loginModal" class="modal">
+      <div class="modal-content">
+        <h3>Management Login</h3>
+        <input type="password" id="adminPass" placeholder="Enter Password" />
+        <button onclick="checkLogin()">Login</button>
+      </div>
+    </div>
+
+    <div id="manageModal" class="modal">
+      <div class="modal-content">
+        <h3>Manage Items</h3>
+        <input id="itemName" placeholder="Item Name" />
+        <input id="itemPrice" type="number" placeholder="Price" />
+        <input id="itemImage" type="file" />
+        <button onclick="addItem()">Add / Update Item</button>
+        <hr />
+        <div id="manageList"></div>
+        <hr />
+        <h4>Upload QR Code</h4>
+        <input type="file" onchange="uploadQR(event)" />
+        <button onclick="closeManage()">Close</button>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
